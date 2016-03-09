@@ -1,11 +1,12 @@
-precision mediump float;        // default medium precision in the fragment shader
+precision highp float;        // default high precision for floating point ranges of the planets
+
 uniform vec3 u_LightPos;        // light position in eye space
 uniform vec4 u_LightCol;
-uniform vec4 u_Color;
+uniform sampler2D u_Texture;    // the input texture
 
-varying vec3 v_Position;        
+varying vec3 v_Position;
 varying vec3 v_Normal;
-varying vec2 v_TexCoordinate;   
+varying vec2 v_TexCoordinate;
 
 void main() {
     // distance for attenuation.
@@ -19,8 +20,8 @@ void main() {
     float diffuse = max(dot(v_Normal, lightVector), 0.01);
 
     // Add a little ambient lighting (this is outerspace)
-    diffuse = diffuse + 0.025;  
+    diffuse = diffuse + 0.025;
 
-    // Multiply color by the diffuse illumination level and texture value to get final output color
-    gl_FragColor = u_Color * u_LightCol * diffuse;
+    // Multiply the color by the diffuse illumination level and texture value to get final output color
+    gl_FragColor = texture2D(u_Texture, v_TexCoordinate) * u_LightCol * diffuse;
 }
