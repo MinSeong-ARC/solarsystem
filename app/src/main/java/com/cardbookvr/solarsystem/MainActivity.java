@@ -32,6 +32,16 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
 
     @Override
     public void setup() {
+        Transform origin = new Transform();
+        //Sun
+        Transform sun = new Transform()
+                .setParent(origin, false)
+                .setLocalScale(6.963f, 6.963f, 6.963f)
+                .addComponent(new Sphere(R.drawable.sun_tex, false));
+
+        //"Sun" light
+        RenderBox.instance.mainLight.color = new float[]{1, 1, 0.8f, 1};
+
         sphere = new Transform()
                 .setLocalPosition(-147.1f, 0, 0)
                 .rotate(0, 0, 180f)
