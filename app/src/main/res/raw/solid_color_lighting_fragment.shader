@@ -4,7 +4,7 @@ uniform vec4 u_LightCol;
 uniform vec4 u_Color;
 
 varying vec3 v_Position;        
-varying vec3 v_Normal
+varying vec3 v_Normal;
 varying vec2 v_TexCoordinate;   
 
 void main() {
