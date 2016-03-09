@@ -32,9 +32,8 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     @Override
     public void setup() {
         sphere = new Transform();
-        float[] color = new float[]{1, 1, 0.5f, 1};
-        sphere.addComponent(new Sphere(color));
-        sphere.setLocalPosition(2.0f, -2.f, 5.0f);
+        sphere.addComponent(new Sphere(R.drawable.earth_tex));
+        sphere.setLocalPosition(2.0f, -2.f, 2.0f);
     }
 
     @Override

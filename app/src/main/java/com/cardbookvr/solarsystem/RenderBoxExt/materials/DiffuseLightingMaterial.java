@@ -114,5 +114,5 @@ public class DiffuseLightingMaterial extends Material {
 
         RenderBox.checkGLError("Diffuse Texture Color Lighting draw");
     }
-    
+
 }
