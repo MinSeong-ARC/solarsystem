@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.cardbookvr.renderbox.IRenderBox;
 import com.cardbookvr.renderbox.RenderBox;
+import com.cardbookvr.renderbox.Time;
 import com.cardbookvr.renderbox.Transform;
 import com.cardbookvr.solarsystem.RenderBoxExt.components.Sphere;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
@@ -31,14 +32,16 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
 
     @Override
     public void setup() {
-        sphere = new Transform();
-        sphere.addComponent(new Sphere(R.drawable.earth_tex));
-        sphere.setLocalPosition(2.0f, -2.f, 2.0f);
+        sphere = new Transform()
+                .setLocalPosition(2.0f, -2.f, 2.0f)
+                .rotate(0, 0, 180f)
+                .addComponent(new Sphere(R.drawable.earth_tex));
     }
 
     @Override
     public void preDraw() {
-
+        float dt = Time.getDeltaTime();
+        sphere.rotate( 0, dt * 10f, 0);
     }
 
     @Override
