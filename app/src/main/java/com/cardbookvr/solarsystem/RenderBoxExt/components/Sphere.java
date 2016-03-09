@@ -4,6 +4,7 @@ import com.cardbookvr.renderbox.components.RenderObject;
 import com.cardbookvr.renderbox.math.MathUtils;
 import com.cardbookvr.renderbox.math.Vector2;
 import com.cardbookvr.renderbox.math.Vector3;
+import com.cardbookvr.solarsystem.RenderBoxExt.materials.DayNightMaterial;
 import com.cardbookvr.solarsystem.RenderBoxExt.materials.DiffuseLightingMaterial;
 import com.cardbookvr.solarsystem.RenderBoxExt.materials.SolidColorLightingMaterial;
 
@@ -34,11 +35,16 @@ public class Sphere extends RenderObject {
         createSolidColorLightingMaterial(color);
     }
 
-
     public Sphere(int textureId){
         super();
         allocateBuffers();
         createDiffuseMaterial(textureId);
+    }
+
+    public Sphere(int textureId, int nightTextureId){
+        super();
+        allocateBuffers();
+        createDayNightMaterial(textureId, nightTextureId);
     }
 
     public Sphere createSolidColorLightingMaterial(float[] color){
@@ -50,6 +56,13 @@ public class Sphere extends RenderObject {
 
     public Sphere createDiffuseMaterial(int textureId){
         DiffuseLightingMaterial mat = new DiffuseLightingMaterial(textureId);
+        mat.setBuffers(vertexBuffer, normalBuffer, texCoordBuffer, indexBuffer, numIndices);
+        material = mat;
+        return this;
+    }
+
+    public Sphere createDayNightMaterial(int textureId, int nightTextureId){
+        DayNightMaterial mat = new DayNightMaterial(textureId, nightTextureId);
         mat.setBuffers(vertexBuffer, normalBuffer, texCoordBuffer, indexBuffer, numIndices);
         material = mat;
         return this;
