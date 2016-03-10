@@ -14,6 +14,10 @@ public class Planet {
 
     public float distance, radius;
 
+    public Planet(float distance, float radius, float rotation, float orbit, Transform origin){
+        setupPlanet(distance, radius, rotation, orbit, origin);
+    }
+
     public Planet(float distance, float radius, float rotation, float orbit, int texId, Transform origin){
         setupPlanet(distance, radius, rotation, orbit, origin);
         transform.addComponent(new Sphere(texId));
