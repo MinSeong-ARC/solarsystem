@@ -19,6 +19,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     private static final String TAG = "Solar System";
 
     Planet[] planets;
+    int currPlanet = 2;
 
     float DISTANCE_FACTOR = 0.5f;   // tighten up the distances (millions km)
     float SCALE_FACTOR = 0.0001f;   // this is 100x relative to interplanetary distances
@@ -165,6 +166,12 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     void goToPlanet(int index){
         RenderBox.mainCamera.getTransform().setParent( planets[index].getOrbitransform(), false);
         RenderBox.mainCamera.getTransform().setLocalPosition( planets[index].distance, planets[index].radius * 1.5f, planets[index].radius * 2f);
+    }
+
+    public void onCardboardTrigger(){
+        if (++currPlanet >= planets.length)
+            currPlanet = 0;
+        goToPlanet(currPlanet);
     }
 
 }
