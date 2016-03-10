@@ -40,6 +40,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
                 .addComponent(new Sphere(R.drawable.sun_tex, false));
 
         //"Sun" light
+        RenderBox.instance.mainLight.transform.setPosition( origin.getPosition());
         RenderBox.instance.mainLight.color = new float[]{1, 1, 0.8f, 1};
 
         sphere = new Transform()
