@@ -144,7 +144,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
                         fudged_distances[i] * DISTANCE_FACTOR,
                         radii[i] * SCALE_FACTOR,
                         rotations[i] * DEG_PER_EHOUR,
-                        orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
+                        orbits[i] * DEG_PER_EYEAR,
                         texIds[i],
                         R.drawable.earth_night_tex,
                         origin);
@@ -153,7 +153,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
                         fudged_distances[i] * DISTANCE_FACTOR,
                         radii[i] * SCALE_FACTOR,
                         rotations[i] * DEG_PER_EHOUR,
-                        orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
+                        orbits[i] * DEG_PER_EYEAR,
                         texIds[i],
                         origin);
             }
