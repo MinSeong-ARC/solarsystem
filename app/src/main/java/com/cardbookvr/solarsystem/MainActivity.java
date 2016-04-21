@@ -111,13 +111,24 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
 
         planets = new Planet[distances.length + 1];
         for (int i = 0; i < distances.length; i++) {
-            planets[i] = new Planet(
-                    fudged_distances[i] * DISTANCE_FACTOR,
-                    radii[i] * SCALE_FACTOR,
-                    rotations[i] * DEG_PER_EHOUR,
-                    orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
-                    texIds[i],
-                    origin);
+            if (i == 2) {
+                planets[i] = new Earth(
+                        fudged_distances[i] * DISTANCE_FACTOR,
+                        radii[i] * SCALE_FACTOR,
+                        rotations[i] * DEG_PER_EHOUR,
+                        orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
+                        texIds[i],
+                        R.drawable.earth_night_tex,
+                        origin);
+            } else {
+                planets[i] = new Planet(
+                        fudged_distances[i] * DISTANCE_FACTOR,
+                        radii[i] * SCALE_FACTOR,
+                        rotations[i] * DEG_PER_EHOUR,
+                        orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
+                        texIds[i],
+                        origin);
+            }
         }
 
         // Create the moon

@@ -18,6 +18,12 @@ public class Planet {
         transform.addComponent(new Sphere(texId));
     }
 
+    public Planet(float distance, float radius, float rotation,
+                  float orbit, Transform origin){
+        setupPlanet(distance, radius, rotation, orbit, origin);
+    }
+
+
     public void setupPlanet(float distance, float radius, float rotation,
                             float orbit, Transform origin){
         this.distance = distance;
