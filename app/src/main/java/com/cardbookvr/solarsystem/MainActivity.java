@@ -17,7 +17,20 @@ import com.google.vrtoolkit.cardboard.CardboardView;
 public class MainActivity extends CardboardActivity implements IRenderBox {
     private static final String TAG = "SolarSystem";
 
-    private Transform sphere;
+    Planet[] planets;
+
+    // tighten up the distances (millions km)
+    float DISTANCE_FACTOR = 0.5f;
+    // this is 100x relative to interplanetary distances
+    float SCALE_FACTOR = 0.0001f;
+    // animation rate for one earth rotation (seconds per rotation)
+    float EDAY_RATE = 10f;
+    // rotation scale factor e.g. to animate earth: dt * 24 * DEG_PER_EHOUR
+    float DEG_PER_EHOUR = (360f / 24f / EDAY_RATE);
+    // animation rate for one earth rotation (seconds per orbit) (real is EDAY_RATE * 365.26)
+    float EYEAR_RATE = 1500f;
+    // orbit scale factor
+    float DEG_PER_EYEAR = (360f / EYEAR_RATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +57,71 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         RenderBox.instance.mainLight.transform.setPosition(origin.getPosition());
         RenderBox.instance.mainLight.color = new float[]{1, 1, 0.8f, 1};
 
-        //Earth…
-        sphere = new Transform()
-                .setLocalPosition(147.1f, 0, 0)
-                .rotate(0, 0, 180f)
-                .addComponent(new Sphere(R.drawable.earth_tex, R.drawable.earth_night_tex));
+        // Planets
+        setupPlanets(origin);
 
-        RenderBox.mainCamera.getTransform().setLocalPosition(147.1f, 2f, 2f);
+        // Start looking at Earth
+        goToPlanet(2);
     }
 
     @Override
     public void preDraw() {
         float dt = Time.getDeltaTime();
-        sphere.rotate( 0, -10f * dt, 0);
     }
 
     @Override
     public void postDraw() {
 
     }
+
+
+    public void setupPlanets(Transform origin) {
+
+        float[] distances = new float[]{57.9f, 108.2f, 149.6f, 227.9f, 778.3f, 1427f, 2871f, 4497f, 5913f};
+
+        float[] fudged_distances = new float[]{57.9f, 108.2f, 149.6f, 227.9f, 400f, 500f, 600f, 700f, 800f};
+
+        float[] radii = new float[]{2440f, 6052f, 6371f, 3390f, 69911f, 58232f, 25362f, 24622f, 1186f};
+
+        float[] rotations = new float[]{1408.8f * 0.05f, 5832f * 0.01f, 24f, 24.6f, 9.84f, 10.2f, 17.9f, 19.1f, 6.39f};
+
+        float[] orbits = new float[]{0.24f, 0.615f, 1.0f, 2.379f, 11.862f, 29.456f, 84.07f, 164.81f, 247.7f};
+
+        int[] texIds = new int[]{
+                R.drawable.mercury_tex,
+                R.drawable.venus_tex,
+                R.drawable.earth_tex,
+                R.drawable.mars_tex,
+                R.drawable.jupiter_tex,
+                R.drawable.saturn_tex,
+                R.drawable.uranus_tex,
+                R.drawable.neptune_tex,
+                R.drawable.pluto_tex
+        };
+
+        planets = new Planet[distances.length + 1];
+        for (int i = 0; i < distances.length; i++) {
+            planets[i] = new Planet(
+                    fudged_distances[i] * DISTANCE_FACTOR,
+                    radii[i] * SCALE_FACTOR,
+                    rotations[i] * DEG_PER_EHOUR,
+                    orbits[i] * DEG_PER_EYEAR * fudged_distances[i] / distances[i],
+                    texIds[i],
+                    origin);
+        }
+
+        // Create the moon
+        planets[distances.length] = new Planet(7.5f, 0.5f, 0, -0.516f,
+                R.drawable.moon_tex, planets[2].getTransform());
+    }
+
+    void goToPlanet(int index){
+        RenderBox.mainCamera.getTransform().setParent(planets[index].getOrbitransform(), false);
+        RenderBox.mainCamera.getTransform().setLocalPosition( planets[index].distance,
+                        planets[index].radius * 1.5f, planets[index].radius * 2f);
+    }
+
+
 
 
     public static int loadTexture(final int resourceId) {
