@@ -33,6 +33,9 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     // orbit scale factor
     float DEG_PER_EYEAR = (360f / EYEAR_RATE);
 
+    int currPlanet = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         setupPlanets(origin);
 
         // Start looking at Earth
-        goToPlanet(2);
+        goToPlanet(currPlanet);
     }
 
     @Override
@@ -142,6 +145,11 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
                         planets[index].radius * 1.5f, planets[index].radius * 2f);
     }
 
+    public void onCardboardTrigger(){
+        if (++currPlanet >= planets.length)
+            currPlanet = 0;
+        goToPlanet(currPlanet);
+    }
 
 
 
