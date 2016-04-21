@@ -35,7 +35,8 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         sphere = new Transform()
                 .setLocalPosition(147.1f, 0, 0)
                 .rotate(0, 0, 180f)
-                .addComponent(new Sphere(R.drawable.earth_tex));
+                .addComponent(new Sphere(R.drawable.earth_tex, R.drawable.earth_night_tex));
+
         RenderBox.mainCamera.getTransform().setLocalPosition(147.1f, 2f, 2f);
     }
 
