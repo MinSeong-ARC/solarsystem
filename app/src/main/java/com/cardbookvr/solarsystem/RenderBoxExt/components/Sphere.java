@@ -4,6 +4,7 @@ import com.cardbookvr.renderbox.components.RenderObject;
 import com.cardbookvr.renderbox.math.MathUtils;
 import com.cardbookvr.renderbox.math.Vector2;
 import com.cardbookvr.renderbox.math.Vector3;
+import com.cardbookvr.solarsystem.RenderBoxExt.materials.SolidColorLightingMaterial;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -23,6 +24,19 @@ public class Sphere extends RenderObject {
     public Sphere() {
         super();
         allocateBuffers();
+    }
+
+    public Sphere(float[] color) {
+        super();
+        allocateBuffers();
+        createSolidColorLightingMaterial(color);
+    }
+
+    public Sphere createSolidColorLightingMaterial(float[] color){
+        SolidColorLightingMaterial mat = new SolidColorLightingMaterial(color);
+        mat.setBuffers(vertexBuffer, normalBuffer, indexBuffer, numIndices);
+        material = mat;
+        return this;
     }
 
     public static void allocateBuffers() {
