@@ -67,6 +67,9 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     @Override
     public void preDraw() {
         float dt = Time.getDeltaTime();
+        for(int i = 0; i < planets.length; i++) {
+            planets[i].preDraw(dt);
+        }
     }
 
     @Override
