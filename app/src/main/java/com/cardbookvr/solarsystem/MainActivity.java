@@ -10,6 +10,7 @@ import com.cardbookvr.renderbox.IRenderBox;
 import com.cardbookvr.renderbox.RenderBox;
 import com.cardbookvr.renderbox.Time;
 import com.cardbookvr.renderbox.Transform;
+import com.cardbookvr.renderbox.components.Camera;
 import com.cardbookvr.solarsystem.RenderBoxExt.components.Sphere;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 import com.google.vrtoolkit.cardboard.CardboardView;
@@ -46,6 +47,12 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     @Override
     public void setup() {
         Transform origin = new Transform();
+
+        //Stars in the sky
+        Transform stars = new Transform()
+                .setParent(RenderBox.mainCamera.transform, false)
+                .setLocalScale(Camera.Z_FAR * 0.99f, Camera.Z_FAR * 0.99f, Camera.Z_FAR * 0.99f)
+                .addComponent(new Sphere(R.drawable.milky_way_tex, false));
 
         //Sun
         Transform sun = new Transform()
