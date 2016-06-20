@@ -12,10 +12,10 @@ import com.cardbookvr.renderbox.Time;
 import com.cardbookvr.renderbox.Transform;
 import com.cardbookvr.renderbox.components.Camera;
 import com.cardbookvr.solarsystem.RenderBoxExt.components.Sphere;
-import com.google.vrtoolkit.cardboard.CardboardActivity;
-import com.google.vrtoolkit.cardboard.CardboardView;
+import com.google.vr.sdk.base.GvrActivity;
+import com.google.vr.sdk.base.GvrView;
 
-public class MainActivity extends CardboardActivity implements IRenderBox {
+public class MainActivity extends GvrActivity implements IRenderBox {
     private static final String TAG = "SolarSystem";
 
     Planet[] planets;
@@ -41,10 +41,10 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CardboardView cardboardView = (CardboardView)
-                findViewById(R.id.cardboard_view);
-        cardboardView.setRenderer(new RenderBox(this, this));
-        setCardboardView(cardboardView);
+        GvrView gvrView = (GvrView)
+                findViewById(R.id.gvr_view);
+        gvrView.setRenderer(new RenderBox(this, this));
+        setGvrView(gvrView);
     }
 
     @Override
